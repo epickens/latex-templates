@@ -1,0 +1,162 @@
+% Rough-drafting helpers.
+% Toggle draft mode with \drafttrue or \draftfalse in ccpaper.tex.
+% Toggle dyslexia mode with \dyslexictrue or \dyslexicfalse in ccpaper.tex.
+
+\makeatletter
+\@ifundefined{ifdraft}{\newif\ifdraft\drafttrue}{}
+\@ifundefined{ifdyslexic}{\newif\ifdyslexic\dyslexicfalse}{}
+\makeatother
+\providecommand{\opendyslexicfontpath}{fonts/}
+
+\usepackage{ifthen}
+\usepackage{iftex}
+\usepackage{lineno}
+\usepackage{todonotes}
+\usepackage[normalem]{ulem}
+
+\ifdyslexic
+  \ifPDFTeX
+    \PackageWarning{custom_defs}{Dyslexia mode requires XeLaTeX or LuaLaTeX to use the installed OpenDyslexic font. Compile with xelatex or lualatex.}%
+  \else
+    \usepackage{fontspec}
+    \IfFileExists{\opendyslexicfontpath OpenDyslexic-Regular.otf}{%
+      \setmainfont{OpenDyslexic-Regular.otf}[
+        Path=\opendyslexicfontpath,
+        Ligatures=TeX,
+        BoldFont=OpenDyslexic-Bold.otf,
+        ItalicFont=OpenDyslexic-Italic.otf,
+        BoldItalicFont=OpenDyslexic-BoldItalic.otf
+      ]
+      \setsansfont{OpenDyslexic-Regular.otf}[
+        Path=\opendyslexicfontpath,
+        Ligatures=TeX,
+        BoldFont=OpenDyslexic-Bold.otf,
+        ItalicFont=OpenDyslexic-Italic.otf,
+        BoldItalicFont=OpenDyslexic-BoldItalic.otf
+      ]
+      \setmonofont{OpenDyslexicMono-Regular.otf}[
+        Path=\opendyslexicfontpath,
+        Ligatures=TeX
+      ]
+    }{%
+      \PackageWarning{custom_defs}{Dyslexia mode requested, but OpenDyslexic-Regular.otf was not found at \opendyslexicfontpath. Install it from https://opendyslexic.org/ or redefine \string\opendyslexicfontpath.}%
+    }
+  \fi
+\fi
+
+\ifdraft
+  \linenumbers
+\fi
+
+\newcommand{\draftonly}[1]{%
+  \ifdraft #1\fi
+}
+
+\newcommand{\finalonly}[1]{%
+  \ifdraft\else #1\fi
+}
+
+\newcommand{\needcite}{%
+  \draftonly{\textcolor{red}{[citation needed]}}%
+}
+
+\newcommand{\placeholder}[1]{%
+  \draftonly{\textcolor{gray}{[TODO: #1]}}%
+}
+
+\newcommand{\revise}[1]{%
+  \draftonly{\textcolor{orange}{[REVISE: #1]}}%
+}
+
+\newcommand{\draftnote}[1]{%
+  \draftonly{\todo[color=yellow!30,size=\small]{#1}}%
+}
+
+\newcommand{\inlinecomment}[2]{%
+  \draftonly{\textcolor{#1}{\textbf{\textless\textless #2\textgreater\textgreater}}}%
+}
+
+\newcommand{\addtext}[1]{%
+  \draftonly{\textcolor{blue}{#1}}\finalonly{#1}%
+}
+
+\newcommand{\removetext}[1]{%
+  \draftonly{\textcolor{red}{\sout{#1}}}%
+}
+
+% Reviewer-style inline comments.
+% Example: \reviewerone{Clarify this claim.}
+
+\definecolor{revieweronecolor}{HTML}{C62828}
+\definecolor{reviewertwocolor}{HTML}{1565C0}
+\definecolor{reviewerthreecolor}{HTML}{6A1B9A}
+\definecolor{reviewerfourcolor}{HTML}{00897B}
+\definecolor{reviewerfivecolor}{HTML}{EF6C00}
+
+\newcommand{\reviewercomment}[3]{%
+  \draftonly{\textcolor{#1}{\textbf{\textless\textless REVIEWER \##2: #3\textgreater\textgreater}}}%
+}
+
+\newcommand{\reviewerone}[1]{\reviewercomment{revieweronecolor}{1}{#1}}
+\newcommand{\reviewertwo}[1]{\reviewercomment{reviewertwocolor}{2}{#1}}
+\newcommand{\reviewerthree}[1]{\reviewercomment{reviewerthreecolor}{3}{#1}}
+\newcommand{\reviewerfour}[1]{\reviewercomment{reviewerfourcolor}{4}{#1}}
+\newcommand{\reviewerfive}[1]{\reviewercomment{reviewerfivecolor}{5}{#1}}
+
+% Figure and table snippets.
+\newcommand{\figureplaceholder}[3]{%
+  \begin{figure}[H]
+    \centering
+    \fbox{\parbox[c][0.25\textheight][c]{0.85\textwidth}{\centering #2}}
+    \caption{#3}
+    \label{fig:#1}
+  \end{figure}
+}
+
+\newcommand{\twopanelfigureplaceholder}[3]{%
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+      \centering
+      \fbox{\parbox[c][0.2\textheight][c]{0.9\textwidth}{\centering Panel A}}
+      \caption{#1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+      \centering
+      \fbox{\parbox[c][0.2\textheight][c]{0.9\textwidth}{\centering Panel B}}
+      \caption{#2}
+    \end{subfigure}
+    \caption{#3}
+  \end{figure}
+}
+
+\newcommand{\landscapetableplaceholder}[1]{%
+  \begin{landscape}
+    \begin{table}[H]
+      \centering
+      \caption{#1}
+      \begin{tabular}{lllll}
+        \toprule
+        Column 1 & Column 2 & Column 3 & Column 4 & Column 5 \\
+        \midrule
+        Value & Value & Value & Value & Value \\
+        \bottomrule
+      \end{tabular}
+    \end{table}
+  \end{landscape}
+}
+
+\newcommand{\basictableplaceholder}[1]{%
+  \begin{table}[H]
+    \centering
+    \caption{#1}
+    \begin{tabular}{lll}
+      \toprule
+      Column 1 & Column 2 & Column 3 \\
+      \midrule
+      Value & Value & Value \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+}

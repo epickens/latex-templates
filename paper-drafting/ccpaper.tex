@@ -1,0 +1,70 @@
+% Template for paper drafts.
+% Compile from this directory:
+%   pdflatex ccpaper.tex
+\documentclass[twoside]{article}
+\usepackage{ccpaper}
+
+\usepackage{lmodern}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{svg}
+\usepackage{pdfcomment}
+\usepackage{vcell}
+\usepackage{float}
+
+% ----- Template toggles -----
+\newif\ifdraft
+\drafttrue
+
+\newif\ifdyslexic
+\dyslexicfalse
+% \dyslexictrue
+
+\input{custom_defs}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\addbibresource{sources.bib}
+
+\title{Paper Title}
+\subtitle{Draft}
+\author{Author Name}
+\date{\today}
+\prof{Professor or Collaborator}
+\course{Course or Working Draft}
+
+\onehalfspacing
+
+\begin{document}
+    \maketitle
+
+    \begin{abstract}
+        Abstract text.
+    \end{abstract}
+
+    \section{Introduction}
+    % \input{sections/introduction}
+
+    \section{Related Work}
+    % \input{sections/related_work}
+
+    \section{Methods}
+    % \input{sections/methods}
+
+    \section{Results}
+    % \input{sections/results}
+
+    \section{Discussion}
+    % \input{sections/discussion}
+
+    \appendix
+    \section{Appendix}
+    % \input{sections/appendix}
+
+    % \printbibliography
+\end{document}

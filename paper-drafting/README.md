@@ -42,12 +42,12 @@ The template exposes common toggles near the top of `ccpaper.tex`, before
 
 Use these combinations for common workflows:
 
-| Workflow | Draft Toggle | Dyslexia Toggle | Compiler |
-| --- | --- | --- | --- |
-| Rough draft | `\drafttrue` | `\dyslexicfalse` | `pdflatex` |
-| Clean shareable draft | `\draftfalse` | `\dyslexicfalse` | `pdflatex` |
-| Dyslexia-friendly draft | `\drafttrue` | `\dyslexictrue` | `xelatex` |
-| Clean dyslexia-friendly draft | `\draftfalse` | `\dyslexictrue` | `xelatex` |
+| Workflow                      | Draft Toggle  | Dyslexia Toggle  | Compiler   |
+| ----------------------------- | ------------- | ---------------- | ---------- |
+| Rough draft                   | `\drafttrue`  | `\dyslexicfalse` | `pdflatex` |
+| Clean shareable draft         | `\draftfalse` | `\dyslexicfalse` | `pdflatex` |
+| Dyslexia-friendly draft       | `\drafttrue`  | `\dyslexictrue`  | `xelatex`  |
+| Clean dyslexia-friendly draft | `\draftfalse` | `\dyslexictrue`  | `xelatex`  |
 
 Draft mode enables line numbers and displays draft-only comments, TODOs, and
 reviewer notes. Final mode hides those draft-only annotations while keeping the
@@ -57,15 +57,15 @@ main document text.
 
 These commands are defined in `custom_defs.tex`:
 
-| Command | Purpose |
-| --- | --- |
-| `\needcite` | Marks a missing citation. |
-| `\placeholder{...}` | Adds a visible TODO placeholder. |
-| `\revise{...}` | Adds a visible revision note. |
-| `\draftnote{...}` | Adds a margin TODO note. |
-| `\addtext{...}` | Shows proposed added text in blue during draft mode; keeps the text in final mode. |
-| `\removetext{...}` | Shows struck-through removed text during draft mode; hides it in final mode. |
-| `\reviewerone{...}` through `\reviewerfive{...}` | Adds color-coded reviewer comments like `<<REVIEWER #1: COMMENT>>`. |
+| Command                                          | Purpose                                                                            |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| `\needcite`                                      | Marks a missing citation.                                                          |
+| `\placeholder{...}`                              | Adds a visible TODO placeholder.                                                   |
+| `\revise{...}`                                   | Adds a visible revision note.                                                      |
+| `\draftnote{...}`                                | Adds a margin TODO note.                                                           |
+| `\addtext{...}`                                  | Shows proposed added text in blue during draft mode; keeps the text in final mode. |
+| `\removetext{...}`                               | Shows struck-through removed text during draft mode; hides it in final mode.       |
+| `\reviewerone{...}` through `\reviewerfive{...}` | Adds color-coded reviewer comments like `<<REVIEWER #1: COMMENT>>`.                |
 
 Figure and table placeholders are also available:
 
@@ -82,7 +82,8 @@ matching `\input{sections/...}` line in `ccpaper.tex` when you want to use them.
 ## Dyslexia Mode
 
 Dyslexia mode uses the project-local OpenDyslexic font files in `fonts/`.
-Those files come from https://opendyslexic.org/.
+
+Those files are not included in this release and must be downloaded from https://opendyslexic.org/.
 
 Compile dyslexia mode with XeLaTeX or LuaLaTeX:
 
